@@ -1,0 +1,19 @@
+
+整理
+使用html语言来写
+开发不同的便利贴模式
+  像素板
+  画画板
+  全限制任务板
+便利贴多建
+格式刷
+顿号键出现滴答清单一样的功能
+
+视频播放器
+音乐播放器
+语音识别器
+
+
+
+打包命令
+pyinstaller -F -w -i "./resources/icon.jpg" main.py --distpath "D:\projects\PackedProjects\DeskStickyNote\version\20251011"
