@@ -5,6 +5,7 @@ import random
 import ctypes
 from Backend import Tools
 from Backend.Tools.ProcessText import ReadText
+from Backend.Tools.ThemeChange import WidgetsThemeChange
 
 
 def CheckIsSaved():
@@ -298,7 +299,7 @@ if __name__ == '__main__':
     titleLayout.setAlignment(Qt.AlignCenter)
     titleLayout.setContentsMargins(0, 0, 0, 0)
 
-    Tools.WidgetsThemeChange(colorFront, colorBack, textEdit,
+    WidgetsThemeChange(colorFront, colorBack, textEdit,
                              titleFrame, savedLabel, title,
                              menu)
 
