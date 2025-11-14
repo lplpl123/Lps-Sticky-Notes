@@ -1,3 +1,5 @@
+import os.path
+
 from Backend.CustomeWidget import *
 import sys
 import json
@@ -117,6 +119,14 @@ if __name__ == '__main__':
     # pre config
     myappid = "my app"
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+    # process the Cach file
+    if not os.path.exists("./Cache"):
+        os.mkdir("./Cache")
+
+    if not os.path.exists("./Cache/cache.txt"):
+        with open('./Cache/cache.txt', 'w') as f:
+            pass
 
     colors = {"琥珀黄-青雀头绿": [(249, 180, 0), (21, 60, 70)],
               "太师青-血牙": [(85, 118, 123), (233, 209, 181)],
