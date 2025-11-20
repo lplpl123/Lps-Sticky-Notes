@@ -1,13 +1,12 @@
 import os.path
-
-from Backend.CustomeWidget import *
 import sys
-import json
 import random
 import ctypes
-from Backend import Tools
+from Backend.CustomeWidget import *
 from Backend.Tools.ProcessText import ReadText
 from Backend.Tools.ThemeChange import WidgetsThemeChange
+from Backend.Tools.Init import InitLocalFiles
+from Backend.Config.Colors import COLORS
 
 
 def CheckIsSaved():
@@ -22,9 +21,6 @@ def CheckIsSaved():
         savedLabel.show()
     else:
         savedLabel.hide()
-
-def ThemeChange():
-    pass
 
 def iconActivated(reason):
     if reason == QSystemTrayIcon.DoubleClick:
@@ -85,7 +81,7 @@ def SetTheme(themeText):
     colorFront = colors[themeText][showIndex]
     colorBack = colors[themeText][1-showIndex]
 
-    Tools.WidgetsThemeChange(colorFront, colorBack, textEdit,
+    WidgetsThemeChange(colorFront, colorBack, textEdit,
                              titleFrame, savedLabel, title,
                              menu)
 
@@ -116,38 +112,22 @@ def Default():
 
 
 if __name__ == '__main__':
-    # pre config
+    # region config
     myappid = "my app"
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-
-    # process the Cach file
-    if not os.path.exists("./Cache"):
-        os.mkdir("./Cache")
-
-    if not os.path.exists("./Cache/cache.txt"):
-        with open('./Cache/cache.txt', 'w') as f:
-            pass
-
-    colors = {"琥珀黄-青雀头绿": [(249, 180, 0), (21, 60, 70)],
-              "太师青-血牙": [(85, 118, 123), (233, 209, 181)],
-              "浅云-东方既白": [(234, 236, 241), (139, 163, 199)],
-              "珊瑚粉红-蓝莓": [(197, 149, 171), (61, 63, 76)],
-              "勃艮第红-米白": [(128, 16, 32), (221, 209, 195)],
-              "烈淡紫-灰白": [(81, 56, 88), (226, 218, 216)],
-              "冷蓝-脏橘": [(59, 96, 105), (211, 152, 134)]}
-
-
-    data = ReadText()
-
     app = QApplication(sys.argv)
 
-    # 获取当前项目路径
-    # 路径不对，是因为项目的termernial路径不对
-
+    colors = COLORS
+    data = ReadText()
     global isSaved
     global savedTexts
     isSaved = True
     savedTexts = data
+
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+    InitLocalFiles()
+    # endregion
+
 
     effectWindow = MyWindow()
 
@@ -170,12 +150,8 @@ if __name__ == '__main__':
     trayIcon.setToolTip("lp的便利贴")
     trayIcon.activated.connect(iconActivated)
     trayIcon.show()
-    # window.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 
 
-    """
-    
-    """
     keysList = list(colors.keys())
     maxIndex = len(keysList)
     countIndex = random.randint(0, maxIndex - 1)

@@ -20,6 +20,13 @@
 语音识别器
 
 
+整理：
+1. 提取方法main
+2. 制作mainsurface
+3. 界面控件和函数分开
+4.
+
+
 
 打包命令
-pyinstaller -F -w -i "./resources/icon.jpg" main.py --distpath "D:\projects\PackedProjects\DeskStickyNote\version\20251011"
+pyinstaller -F -w -i "./Resources/icon.jpg" main.py --distpath "C:\Projects\GithubProjects\Lps-Sticky-Notes\Packing"
