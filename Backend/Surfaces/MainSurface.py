@@ -201,60 +201,60 @@ class MainSurface():
 
     def Save(self):
         try:
-            data = textEdit.toPlainText()
+            data = self.textEdit.toPlainText()
             global savedTexts
             savedTexts = data
             with open("./Cache/cache.txt", mode="w") as file:
                 file.write(data)
 
-            savedLabel.hide()
+            self.savedLabel.hide()
         except Exception as E:
             print(E)
 
-    def Hide():
+    def Hide(self):
         effectWindow.showMinimized()
 
-    def SaveLabelHide():
-        savedLabel.hide()
+    def SaveLabelHide(self):
+        self.savedLabel.hide()
 
-    def SaveLabelShow():
-        savedLabel.show()
+    def SaveLabelShow(self):
+        self.savedLabel.show()
 
-    def TextBold():
+    def TextBold(self):
         try:
-            cursor = textEdit.textCursor()
+            cursor = self.textEdit.textCursor()
             if cursor.hasSelection():
                 charFormat = cursor.charFormat()
                 charFormat.setFontWeight(QFont.Bold)
                 cursor.setCharFormat(charFormat)
-                textEdit.setTextCursor(cursor)
+                self.textEdit.setTextCursor(cursor)
 
         except Exception as E:
             print(E)
 
-    def SetTextSize(size):
+    def SetTextSize(self):
         try:
-            cursor = textEdit.textCursor()
+            cursor = self.textEdit.textCursor()
             if cursor.hasSelection():
                 charFormat = cursor.charFormat()
                 charFormat.setFontPointSize(size)
                 cursor.setCharFormat(charFormat)
-                textEdit.setTextCursor(cursor)
+                self.textEdit.setTextCursor(cursor)
 
         except Exception as E:
             print(E)
 
-    def SetTheme(themeText):
+    def SetTheme(self, themeText):
         showIndex = random.randint(0, 1)
 
-        colorFront = colors[themeText][showIndex]
-        colorBack = colors[themeText][1 - showIndex]
+        colorFront = self.colors[themeText][showIndex]
+        colorBack = self.colors[themeText][1 - showIndex]
 
-        WidgetsThemeChange(colorFront, colorBack, textEdit,
+        WidgetsThemeChange(colorFront, colorBack, self.textEdit,
                            titleFrame, savedLabel, title,
                            menu)
 
-    def SetTextColor():
+    def SetTextColor(self):
         colorWindow = MyColorWindow(effectWindow)
         colorWindow.setWindowFlags(Qt.FramelessWindowHint)
         col = colorWindow.getColor(parent=effectWindow).name()
