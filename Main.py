@@ -17,6 +17,6 @@ if __name__ == '__main__':
     savedTexts = ReadText()
 
     app = QApplication(sys.argv)
-    mainSurface = MainSurface(app, colorFront, colorBack)
+    mainSurface = MainSurface(app, colorFront, colorBack, savedTexts)
 
     sys.exit(app.exec_())

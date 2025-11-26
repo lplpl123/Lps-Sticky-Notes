@@ -4,12 +4,13 @@ from Backend.Tools.ThemeChange import WidgetsThemeChange
 from Backend.CustomeWidget import *
 
 
-class MainSurface():
+class MainSurface:
 
-    def __int__(self, app, colorFront, colorBack):
+    def __init__(self, app, colorFront, colorBack, savedTexts):
         self.app = app
         self.colorFront = colorFront
         self.colorBack = colorBack
+        self.savedTexts = savedTexts
 
         self.__init_surface()
 
@@ -32,7 +33,6 @@ class MainSurface():
         window.setGeometry(0, 0, 250, 400)
         self.effectWindow.setWindowIcon(QIcon("./Resources/icon.jpg"))
         window.setGraphicsEffect(shadow)
-        window.show()
 
         # endregion
 
@@ -50,14 +50,13 @@ class MainSurface():
 
         windowL = QVBoxLayout(window)
 
-        titleFrame = QFrame(window)
-        titleFrame.setMinimumHeight(40)
+        self.titleFrame = QFrame(window)
+        self.titleFrame.setMinimumHeight(40)
 
         self.textEdit = QTextEdit(window)
-        self.textEdit.textChanged.connect(self.CheckIsSaved)
-        self.textEdit.setPlainText(savedTexts)
+        self.textEdit.setPlainText(self.savedTexts)
 
-        windowL.addWidget(titleFrame)
+        windowL.addWidget(self.titleFrame)
         windowL.addWidget(self.textEdit)
 
         windowL.setStretch(0, 2)
@@ -67,14 +66,34 @@ class MainSurface():
 
         # endregion
 
+        # region titleL
+
+        titleL = QHBoxLayout(self.titleFrame)
+
+        self.savedLabel = QLabel(self.titleFrame)
+        self.savedLabel.setGeometry(15, 15, 10, 10)
+        self.savedLabel.setText("*")
+        self.savedLabel.hide()
+
+        self.titleButton = QPushButton(self.titleFrame)
+        self.titleButton.setText("lp的便利贴")
+        # self.titleButton.setContextMenuPolicy(Qt.ActionsContextMenu)
+
+        titleL.addWidget(self.titleButton)
+        titleL.setAlignment(Qt.AlignCenter)
+        titleL.setContentsMargins(0, 0, 0, 0)
+
+        # endregion
+
+
         # region menu
-        menu = QMenu()
+        self.menu = QMenu()
 
-        ActionSave = QAction("save")
-        ActionSave.setShortcut('Ctrl+S')
+        self.ActionSave = QAction("save")
+        self.ActionSave.setShortcut('Ctrl+S')
 
-        ActionHide = QAction("hide")
-        ActionHide.setShortcut('Ctrl+H')
+        self.ActionHide = QAction("hide")
+        self.ActionHide.setShortcut('Ctrl+H')
 
         ActionTextDefault = QAction("default")
         ActionTextDefault.setShortcut('Ctrl+D')
@@ -84,18 +103,18 @@ class MainSurface():
         ActionClose = QAction("close")
         ActionClose.setShortcut('Ctrl+G')
 
-        MenuTextEnlarge = menu.addMenu("font size")
-        MenuThemeChange = menu.addMenu("theme change")
+        MenuTextEnlarge = self.menu.addMenu("font size")
+        MenuThemeChange = self.menu.addMenu("theme change")
 
-        menu.addAction(ActionSave)
-        menu.addAction(ActionHide)
-        menu.addAction(ActionTextDefault)
-        menu.addAction(ActionTextColor)
-        menu.addAction(ActionTextBold)
-        menu.addAction(ActionClose)
+        self.menu.addAction(self.ActionSave)
+        self.menu.addAction(self.ActionHide)
+        self.menu.addAction(ActionTextDefault)
+        self.menu.addAction(ActionTextColor)
+        self.menu.addAction(ActionTextBold)
+        self.menu.addAction(ActionClose)
 
-        ActionSave.triggered.connect(self.Save)
-        ActionHide.triggered.connect(self.Hide)
+        self.ActionSave.triggered.connect(self.Save)
+        self.ActionHide.triggered.connect(self.Hide)
         ActionTextDefault.triggered.connect(self.Default)
         ActionTextColor.triggered.connect(self.SetTextColor)
         ActionTextBold.triggered.connect(self.TextBold)
@@ -153,40 +172,24 @@ class MainSurface():
 
         # endregion
 
-        # region titleL
-
-        titleL = QHBoxLayout(titleFrame)
-
-        self.savedLabel = QLabel(titleFrame)
-        self.savedLabel.setGeometry(15, 15, 10, 10)
-        self.savedLabel.setText("*")
-        self.savedLabel.hide()
-
-        titleButton = QPushButton(titleFrame)
-        titleButton.setText("lp的便利贴")
-        # titleButton.setContextMenuPolicy(Qt.ActionsContextMenu)
-        titleButton.setMenu(menu)
-
-        titleL.addWidget(titleButton)
-        titleL.setAlignment(Qt.AlignCenter)
-        titleL.setContentsMargins(0, 0, 0, 0)
-
-        # endregion
-
         WidgetsThemeChange(self.colorFront, self.colorBack, self.textEdit,
-                           titleFrame, self.savedLabel, titleButton,
-                           menu)
+                           self.titleFrame, self.savedLabel, self.titleButton,
+                           self.menu)
+
+        # function bunding
+        self.textEdit.textChanged.connect(self.CheckIsSaved)
+        self.titleButton.setMenu(self.menu)
+        window.show()
 
 
     def CheckIsSaved(self):
         def SavingCheck():
 
-            if self.textEdit.toPlainText() != savedTexts:
+            if self.textEdit.toPlainText() != self.savedTexts:
                 return False
             return True
 
         if not SavingCheck():
-            isSaved = False
             self.savedLabel.show()
         else:
             self.savedLabel.hide()
@@ -202,8 +205,7 @@ class MainSurface():
     def Save(self):
         try:
             data = self.textEdit.toPlainText()
-            global savedTexts
-            savedTexts = data
+            self.savedTexts = data
             with open("./Cache/cache.txt", mode="w") as file:
                 file.write(data)
 
@@ -212,7 +214,7 @@ class MainSurface():
             print(E)
 
     def Hide(self):
-        effectWindow.showMinimized()
+        self.effectWindow.showMinimized()
 
     def SaveLabelHide(self):
         self.savedLabel.hide()
@@ -232,7 +234,7 @@ class MainSurface():
         except Exception as E:
             print(E)
 
-    def SetTextSize(self):
+    def SetTextSize(self, size):
         try:
             cursor = self.textEdit.textCursor()
             if cursor.hasSelection():
@@ -247,33 +249,33 @@ class MainSurface():
     def SetTheme(self, themeText):
         showIndex = random.randint(0, 1)
 
-        colorFront = self.colors[themeText][showIndex]
+        self.colorFront = self.colors[themeText][showIndex]
         colorBack = self.colors[themeText][1 - showIndex]
 
-        WidgetsThemeChange(colorFront, colorBack, self.textEdit,
-                           titleFrame, savedLabel, title,
-                           menu)
+        WidgetsThemeChange(self.colorFront, colorBack, self.textEdit,
+                           self.titleFrame, self.savedLabel, self.titleButton,
+                           self.menu)
 
     def SetTextColor(self):
-        colorWindow = MyColorWindow(effectWindow)
+        colorWindow = MyColorWindow(self.effectWindow)
         colorWindow.setWindowFlags(Qt.FramelessWindowHint)
-        col = colorWindow.getColor(parent=effectWindow).name()
+        col = colorWindow.getColor(parent=self.effectWindow).name()
 
-        cursor = textEdit.textCursor()
+        cursor = self.textEdit.textCursor()
         if cursor.hasSelection():
             charFormat = cursor.charFormat()
             charFormat.setForeground(QBrush(QColor(col)))
             cursor.setCharFormat(charFormat)
-            textEdit.setTextCursor(cursor)
+            self.textEdit.setTextCursor(cursor)
 
-    def Default():
-        cursor = textEdit.textCursor()
+    def Default(self):
+        cursor = self.textEdit.textCursor()
         charFormat = cursor.charFormat()
         charFormat.setFontPointSize(13)
         try:
-            charFormat.setForeground(QBrush(QColor(colorFront[0], colorFront[1], colorFront[2])))
+            charFormat.setForeground(QBrush(QColor(self.colorFront[0], self.colorFront[1], self.colorFront[2])))
         except Exception as E:
             print(E)
         charFormat.setFontWeight(QFont.Normal)
         cursor.setCharFormat(charFormat)
-        textEdit.setTextCursor(cursor)
+        self.textEdit.setTextCursor(cursor)
