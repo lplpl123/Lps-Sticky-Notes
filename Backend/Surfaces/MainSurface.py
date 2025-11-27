@@ -1,7 +1,9 @@
 import random
 import sys
+import json
 from Backend.Tools.ThemeChange import WidgetsThemeChange
 from Backend.CustomeWidget import *
+from Backend.Config.Colors import COLORS
 
 
 class MainSurface:
@@ -10,6 +12,7 @@ class MainSurface:
         self.app = app
         self.colorFront = colorFront
         self.colorBack = colorBack
+        self.colors = COLORS
         self.savedTexts = savedTexts
 
         self.__init_surface()
@@ -17,10 +20,10 @@ class MainSurface:
     def __init_surface(self):
         # region window
 
-        self.effectWindow = MyWindow()
+        self.effectWindow = QWidget()
 
         self.effectWindow.setAttribute(Qt.WA_TranslucentBackground)
-        self.effectWindow.setGeometry(1580, 85, 300, 450)
+        self.effectWindow.setGeometry(1580, 85, 260, 410)
         self.effectWindow.setWindowFlags(Qt.SplashScreen | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.effectWindow.show()
 
@@ -50,11 +53,16 @@ class MainSurface:
 
         windowL = QVBoxLayout(window)
 
-        self.titleFrame = QFrame(window)
+        self.titleFrame = MyFrame(window)
         self.titleFrame.setMinimumHeight(40)
 
         self.textEdit = QTextEdit(window)
-        self.textEdit.setPlainText(self.savedTexts)
+        for key, value in self.savedTexts.items():
+            text = value[0]
+            fontSize = value[1]
+            self.textEdit.setFontPointSize(fontSize)
+            self.textEdit.append(text)
+        self.textEdit.setFontPointSize(16)
 
         windowL.addWidget(self.titleFrame)
         windowL.addWidget(self.textEdit)
@@ -95,80 +103,61 @@ class MainSurface:
         self.ActionHide = QAction("hide")
         self.ActionHide.setShortcut('Ctrl+H')
 
-        ActionTextDefault = QAction("default")
-        ActionTextDefault.setShortcut('Ctrl+D')
+        self.ActionTextDefault = QAction("default")
+        self.ActionTextDefault.setShortcut('Ctrl+D')
 
-        ActionTextColor = QAction("Color")
-        ActionTextBold = QAction("Bold")
-        ActionClose = QAction("close")
-        ActionClose.setShortcut('Ctrl+G')
+        self.ActionTextColor = QAction("Color")
+        self.ActionTextBold = QAction("Bold")
+        self.ActionClose = QAction("close")
+        self.ActionClose.setShortcut('Ctrl+G')
+        self.ActionTextEnlarge = QAction("Text Enlarge")
+        self.ActionTextEnlarge.setShortcut('Ctrl++')
+        self.ActionTextShrink = QAction("Text Shrink")
+        self.ActionTextShrink.setShortcut('Ctrl+-')
 
-        MenuTextEnlarge = self.menu.addMenu("font size")
-        MenuThemeChange = self.menu.addMenu("theme change")
+        self.MenuThemeChange = self.menu.addMenu("theme change")
 
         self.menu.addAction(self.ActionSave)
         self.menu.addAction(self.ActionHide)
-        self.menu.addAction(ActionTextDefault)
-        self.menu.addAction(ActionTextColor)
-        self.menu.addAction(ActionTextBold)
-        self.menu.addAction(ActionClose)
+        self.menu.addAction(self.ActionTextDefault)
+        self.menu.addAction(self.ActionTextEnlarge)
+        self.menu.addAction(self.ActionTextShrink)
+        self.menu.addAction(self.ActionTextColor)
+        self.menu.addAction(self.ActionTextBold)
+        self.menu.addAction(self.ActionClose)
 
         self.ActionSave.triggered.connect(self.Save)
         self.ActionHide.triggered.connect(self.Hide)
-        ActionTextDefault.triggered.connect(self.Default)
-        ActionTextColor.triggered.connect(self.SetTextColor)
-        ActionTextBold.triggered.connect(self.TextBold)
+        self.ActionTextDefault.triggered.connect(self.Default)
+        self.ActionTextColor.triggered.connect(self.SetTextColor)
+        self.ActionTextBold.triggered.connect(self.TextBold)
+        self.ActionTextEnlarge.triggered.connect(self.EnlargeTextSize)
+        self.ActionTextShrink.triggered.connect(self.ShrinkTextSize)
 
-        FontSize01 = QAction("12px")
-        FontSize02 = QAction("24px")
-        FontSize03 = QAction("36px")
-        FontSize04 = QAction("48px")
-        FontSize05 = QAction("60px")
-        FontSize06 = QAction("72px")
-        FontSize07 = QAction("10px")
-        FontSize08 = QAction("8px")
-        MenuTextEnlarge.addAction(FontSize08)
-        MenuTextEnlarge.addAction(FontSize07)
-        MenuTextEnlarge.addAction(FontSize01)
-        MenuTextEnlarge.addAction(FontSize02)
-        MenuTextEnlarge.addAction(FontSize03)
-        MenuTextEnlarge.addAction(FontSize04)
-        MenuTextEnlarge.addAction(FontSize05)
-        MenuTextEnlarge.addAction(FontSize06)
+        self.Theme01 = QAction("琥珀黄-青雀头绿")
+        self.Theme02 = QAction("太师青-血牙")
+        self.Theme03 = QAction("浅云-东方既白")
+        self.Theme04 = QAction("珊瑚粉红-蓝莓")
+        self.Theme05 = QAction("勃艮第红-米白")
+        self.Theme06 = QAction("烈淡紫-灰白")
+        self.Theme07 = QAction("冷蓝-脏橘")
+        self.MenuThemeChange.addAction(self.Theme01)
+        self.MenuThemeChange.addAction(self.Theme02)
+        self.MenuThemeChange.addAction(self.Theme03)
+        self.MenuThemeChange.addAction(self.Theme04)
+        self.MenuThemeChange.addAction(self.Theme05)
+        self.MenuThemeChange.addAction(self.Theme06)
+        self.MenuThemeChange.addAction(self.Theme07)
 
-        FontSize01.triggered.connect(lambda: self.SetTextSize(12))
-        FontSize02.triggered.connect(lambda: self.SetTextSize(24))
-        FontSize03.triggered.connect(lambda: self.SetTextSize(36))
-        FontSize04.triggered.connect(lambda: self.SetTextSize(48))
-        FontSize05.triggered.connect(lambda: self.SetTextSize(60))
-        FontSize06.triggered.connect(lambda: self.SetTextSize(72))
-        FontSize07.triggered.connect(lambda: self.SetTextSize(10))
-        FontSize08.triggered.connect(lambda: self.SetTextSize(8))
+        self.Theme01.triggered.connect(lambda: self.SetTheme("琥珀黄-青雀头绿"))
+        self.Theme02.triggered.connect(lambda: self.SetTheme("太师青-血牙"))
+        self.Theme03.triggered.connect(lambda: self.SetTheme("浅云-东方既白"))
+        self.Theme04.triggered.connect(lambda: self.SetTheme("珊瑚粉红-蓝莓"))
+        self.Theme05.triggered.connect(lambda: self.SetTheme("勃艮第红-米白"))
+        self.Theme06.triggered.connect(lambda: self.SetTheme("烈淡紫-灰白"))
+        self.Theme07.triggered.connect(lambda: self.SetTheme("冷蓝-脏橘"))
 
-        Theme01 = QAction("琥珀黄-青雀头绿")
-        Theme02 = QAction("太师青-血牙")
-        Theme03 = QAction("浅云-东方既白")
-        Theme04 = QAction("珊瑚粉红-蓝莓")
-        Theme05 = QAction("勃艮第红-米白")
-        Theme06 = QAction("烈淡紫-灰白")
-        Theme07 = QAction("冷蓝-脏橘")
-        MenuThemeChange.addAction(Theme01)
-        MenuThemeChange.addAction(Theme02)
-        MenuThemeChange.addAction(Theme03)
-        MenuThemeChange.addAction(Theme04)
-        MenuThemeChange.addAction(Theme05)
-        MenuThemeChange.addAction(Theme06)
-        MenuThemeChange.addAction(Theme07)
-
-        Theme01.triggered.connect(lambda: self.SetTheme("琥珀黄-青雀头绿"))
-        Theme02.triggered.connect(lambda: self.SetTheme("太师青-血牙"))
-        Theme03.triggered.connect(lambda: self.SetTheme("浅云-东方既白"))
-        Theme04.triggered.connect(lambda: self.SetTheme("珊瑚粉红-蓝莓"))
-        Theme05.triggered.connect(lambda: self.SetTheme("勃艮第红-米白"))
-        Theme06.triggered.connect(lambda: self.SetTheme("烈淡紫-灰白"))
-        Theme07.triggered.connect(lambda: self.SetTheme("冷蓝-脏橘"))
-
-        ActionClose.triggered.connect(self.Close)
+        self.ActionClose.triggered.connect(self.Close)
 
         # endregion
 
@@ -204,10 +193,32 @@ class MainSurface:
 
     def Save(self):
         try:
+            # texts save
             data = self.textEdit.toPlainText()
             self.savedTexts = data
             with open("./Cache/cache.txt", mode="w") as file:
                 file.write(data)
+
+            # qss save
+            toWrite = {}
+            allTexts = self.textEdit.document()
+            lines = allTexts.blockCount()
+            for i in range(lines):
+                textLine = allTexts.findBlockByLineNumber(i)
+                cursor = self.textEdit.textCursor()
+                cursor.setPosition(textLine.position())
+                fontSize = cursor.charFormat().font().pointSize()
+                # todo 保存颜色、初始颜色、初始主题
+                fontColor = cursor.charFormat().foreground().color().name()
+                print(fontColor)
+                textLine = textLine.text()
+                toWrite[i] = [textLine, fontSize]
+
+
+            with open("./Backend/Config/SavedData.json", 'w') as f:
+                json.dump(toWrite, f)
+
+            print("allTexts")
 
             self.savedLabel.hide()
         except Exception as E:
@@ -234,12 +245,28 @@ class MainSurface:
         except Exception as E:
             print(E)
 
-    def SetTextSize(self, size):
+    def EnlargeTextSize(self):
         try:
             cursor = self.textEdit.textCursor()
             if cursor.hasSelection():
                 charFormat = cursor.charFormat()
-                charFormat.setFontPointSize(size)
+                size = charFormat.font().pointSize()
+
+                charFormat.setFontPointSize(size + 2)
+                cursor.setCharFormat(charFormat)
+                self.textEdit.setTextCursor(cursor)
+
+        except Exception as E:
+            print(E)
+
+    def ShrinkTextSize(self):
+        try:
+            cursor = self.textEdit.textCursor()
+            if cursor.hasSelection():
+                charFormat = cursor.charFormat()
+                size = charFormat.font().pointSize()
+
+                charFormat.setFontPointSize(size - 2)
                 cursor.setCharFormat(charFormat)
                 self.textEdit.setTextCursor(cursor)
 
@@ -271,7 +298,7 @@ class MainSurface:
     def Default(self):
         cursor = self.textEdit.textCursor()
         charFormat = cursor.charFormat()
-        charFormat.setFontPointSize(13)
+        charFormat.setFontPointSize(9)
         try:
             charFormat.setForeground(QBrush(QColor(self.colorFront[0], self.colorFront[1], self.colorFront[2])))
         except Exception as E:

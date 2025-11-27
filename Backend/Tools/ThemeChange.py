@@ -7,7 +7,6 @@ def WidgetsThemeChange(colorFront, colorBack, textEdit,
     textEdit.setStyleSheet("""
         QWidget {
         font-family: "微软雅黑";
-        font-size: 22px;
         color: rgb""" + str(colorFront) + """;
         background-color: rgb""" + str(colorBack) + """;
         }

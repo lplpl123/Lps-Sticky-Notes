@@ -24,6 +24,30 @@ class MyWindow(QWidget):
             self.drag = False
 
 
+class MyFrame(QFrame):
+    clicked = pyqtSignal()
+
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.drag = True
+
+            self.offset = event.globalPos() - self.parent().parent().pos()
+
+    def mouseMoveEvent(self, event):
+        if self.drag:
+            new_pos = event.globalPos() - self.offset
+            self.parent().parent().move(new_pos)
+
+    def mouseReleaseEvent(self, event):
+        if self.drag and event.button() == Qt.LeftButton:
+            self.drag = False
+
+
+
 class MyQLabel(QLabel):
     clicked = pyqtSignal()
 
