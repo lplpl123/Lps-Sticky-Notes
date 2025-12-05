@@ -21,7 +21,6 @@ class MainSurface:
         # region window
 
         self.effectWindow = QWidget()
-
         self.effectWindow.setAttribute(Qt.WA_TranslucentBackground)
         self.effectWindow.setGeometry(1580, 85, 260, 410)
         self.effectWindow.setWindowFlags(Qt.SplashScreen | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
@@ -57,11 +56,17 @@ class MainSurface:
         self.titleFrame.setMinimumHeight(40)
 
         self.textEdit = QTextEdit(window)
+        from Backend.Tools.ToolsColor2RGB import hex_to_rgb
         for key, value in self.savedTexts.items():
             text = value[0]
             fontSize = value[1]
+            fontColor = value[2]
+            rgbColor = hex_to_rgb(fontColor)
             self.textEdit.setFontPointSize(fontSize)
+            if fontColor != "#000000":
+                self.textEdit.setTextColor(QColor(rgbColor[0], rgbColor[1], rgbColor[2]))
             self.textEdit.append(text)
+            self.textEdit.setTextColor(QColor(self.colorFront[0], self.colorFront[1], self.colorFront[2]))
         self.textEdit.setFontPointSize(16)
 
         windowL.addWidget(self.titleFrame)
@@ -196,11 +201,10 @@ class MainSurface:
             # texts save
             data = self.textEdit.toPlainText()
             self.savedTexts = data
-            with open("./Cache/cache.txt", mode="w") as file:
-                file.write(data)
 
             # qss save
             toWrite = {}
+            toTheme = {}
             allTexts = self.textEdit.document()
             lines = allTexts.blockCount()
             for i in range(lines):
@@ -208,17 +212,20 @@ class MainSurface:
                 cursor = self.textEdit.textCursor()
                 cursor.setPosition(textLine.position())
                 fontSize = cursor.charFormat().font().pointSize()
-                # todo 保存颜色、初始颜色、初始主题
+
                 fontColor = cursor.charFormat().foreground().color().name()
-                print(fontColor)
                 textLine = textLine.text()
-                toWrite[i] = [textLine, fontSize]
+                toWrite[i] = [textLine, fontSize, fontColor]
+            # acquire the theme
+            toTheme["frontColor"] = (tuple(self.colorFront))
+            toTheme["backColor"] = (tuple(self.colorBack))
 
 
             with open("./Backend/Config/SavedData.json", 'w') as f:
                 json.dump(toWrite, f)
 
-            print("allTexts")
+            with open("./Backend/Config/Theme.json", 'w') as f:
+                json.dump(toTheme, f)
 
             self.savedLabel.hide()
         except Exception as E:
@@ -277,11 +284,13 @@ class MainSurface:
         showIndex = random.randint(0, 1)
 
         self.colorFront = self.colors[themeText][showIndex]
-        colorBack = self.colors[themeText][1 - showIndex]
+        self.colorBack = self.colors[themeText][1 - showIndex]
 
-        WidgetsThemeChange(self.colorFront, colorBack, self.textEdit,
+        WidgetsThemeChange(self.colorFront, self.colorBack, self.textEdit,
                            self.titleFrame, self.savedLabel, self.titleButton,
                            self.menu)
+
+        self.textEdit.setTextColor(QColor(self.colorFront[0], self.colorFront[1], self.colorFront[2]))
 
     def SetTextColor(self):
         colorWindow = MyColorWindow(self.effectWindow)
@@ -298,7 +307,7 @@ class MainSurface:
     def Default(self):
         cursor = self.textEdit.textCursor()
         charFormat = cursor.charFormat()
-        charFormat.setFontPointSize(9)
+        charFormat.setFontPointSize(16)
         try:
             charFormat.setForeground(QBrush(QColor(self.colorFront[0], self.colorFront[1], self.colorFront[2])))
         except Exception as E:

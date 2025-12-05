@@ -18,11 +18,10 @@
   <a target="code" href="///C:/Projects/GithubProjects/Lps-Sticky-Notes/Main.py" type="text/plain"><tt>Main.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
-    <a href="#Backend">Backend</a>
- &#8226;   <a href="#Backend.CustomeWidget">Backend.CustomeWidget</a>
- &#8226;   <a href="#Backend.Tools">Backend.Tools</a>
+    <a href="#Backend.CustomeWidget">Backend.CustomeWidget</a>
+ &#8226;   <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
  &#8226;   <a href="#Backend.Tools.ProcessText">Backend.Tools.ProcessText</a>
- &#8226;   <a href="#Backend.Tools.ThemeChange">Backend.Tools.ThemeChange</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
@@ -158,19 +157,16 @@ imports:
  &#8226;   <a href="#genericpath">genericpath</a>
  &#8226;   <a href="#heapq">heapq</a>
  &#8226;   <a href="#io">io</a>
- &#8226;   <a href="#json">json</a>
  &#8226;   <a href="#keyword">keyword</a>
  &#8226;   <a href="#linecache">linecache</a>
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
- &#8226;   <a href="#os.path">os.path</a>
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#pyi_rth_pkgutil.py">pyi_rth_pkgutil.py</a>
  &#8226;   <a href="#pyi_rth_pyqt5.py">pyi_rth_pyqt5.py</a>
- &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#reprlib">reprlib</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
@@ -257,15 +253,44 @@ imported by:
   <a name="Backend"></a>
   <a target="code" href="-" type="text/plain"><tt>Backend</tt></a>
 <span class="moduletype">NamespacePackage</span>  <div class="import">
+imported by:
+    <a href="#Backend.Config">Backend.Config</a>
+ &#8226;   <a href="#Backend.CustomeWidget">Backend.CustomeWidget</a>
+ &#8226;   <a href="#Backend.Surfaces">Backend.Surfaces</a>
+ &#8226;   <a href="#Backend.Tools">Backend.Tools</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Config"></a>
+  <a target="code" href="-" type="text/plain"><tt>Backend.Config</tt></a>
+<span class="moduletype">NamespacePackage</span>  <div class="import">
 imports:
-    <a href="#Backend.Tools">Backend.Tools</a>
+    <a href="#Backend">Backend</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#Backend.CustomeWidget">Backend.CustomeWidget</a>
- &#8226;   <a href="#Backend.Tools">Backend.Tools</a>
- &#8226;   <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Config.Colors">Backend.Config.Colors</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Config.Colors"></a>
+  <a target="code" href="///C:/Projects/GithubProjects/Lps-Sticky-Notes/Backend/Config/Colors.py" type="text/plain"><tt>Backend.Config.Colors</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Backend.Config">Backend.Config</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
 
   </div>
 
@@ -279,6 +304,46 @@ imports:
     <a href="#Backend">Backend</a>
  &#8226;   <a href="#PyQt5.Qt">PyQt5.Qt</a>
  &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Main.py">Main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Surfaces"></a>
+  <a target="code" href="-" type="text/plain"><tt>Backend.Surfaces</tt></a>
+<span class="moduletype">NamespacePackage</span>  <div class="import">
+imports:
+    <a href="#Backend">Backend</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Surfaces.MainSurface"></a>
+  <a target="code" href="///C:/Projects/GithubProjects/Lps-Sticky-Notes/Backend/Surfaces/MainSurface.py" type="text/plain"><tt>Backend.Surfaces.MainSurface</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Backend.Config.Colors">Backend.Config.Colors</a>
+ &#8226;   <a href="#Backend.CustomeWidget">Backend.CustomeWidget</a>
+ &#8226;   <a href="#Backend.Surfaces">Backend.Surfaces</a>
+ &#8226;   <a href="#Backend.Tools.ThemeChange">Backend.Tools.ThemeChange</a>
+ &#8226;   <a href="#Backend.Tools.ToolsColor2RGB">Backend.Tools.ToolsColor2RGB</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#sys">sys</a>
 
   </div>
   <div class="import">
@@ -299,10 +364,30 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Backend">Backend</a>
+    <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
  &#8226;   <a href="#Backend.Tools.ProcessText">Backend.Tools.ProcessText</a>
  &#8226;   <a href="#Backend.Tools.ThemeChange">Backend.Tools.ThemeChange</a>
- &#8226;   <a href="#Main.py">Main.py</a>
+ &#8226;   <a href="#Backend.Tools.ToolsColor2RGB">Backend.Tools.ToolsColor2RGB</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Tools.Init"></a>
+  <a target="code" href="///C:/Projects/GithubProjects/Lps-Sticky-Notes/Backend/Tools/Init.py" type="text/plain"><tt>Backend.Tools.Init</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Backend.Config.Colors">Backend.Config.Colors</a>
+ &#8226;   <a href="#Backend.Tools">Backend.Tools</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#random">random</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Main.py">Main.py</a>
 
   </div>
 
@@ -314,6 +399,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#Backend.Tools">Backend.Tools</a>
+ &#8226;   <a href="#json">json</a>
 
   </div>
   <div class="import">
@@ -334,7 +420,23 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Backend.Tools.ToolsColor2RGB"></a>
+  <a target="code" href="///C:/Projects/GithubProjects/Lps-Sticky-Notes/Backend/Tools/ToolsColor2RGB.py" type="text/plain"><tt>Backend.Tools.ToolsColor2RGB</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Backend.Tools">Backend.Tools</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
 
   </div>
 
@@ -6488,7 +6590,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
+ &#8226;   <a href="#Backend.Tools.ProcessText">Backend.Tools.ProcessText</a>
  &#8226;   <a href="#json.decoder">json.decoder</a>
  &#8226;   <a href="#json.encoder">json.encoder</a>
  &#8226;   <a href="#json.scanner">json.scanner</a>
@@ -6859,7 +6963,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
+ &#8226;   <a href="#Main.py">Main.py</a>
  &#8226;   <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#_pyi_rth_utils">_pyi_rth_utils</a>
  &#8226;   <a href="#_pyi_rth_utils.qt">_pyi_rth_utils.qt</a>
@@ -6912,8 +7017,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
- &#8226;   <a href="#os">os</a>
+    <a href="#os">os</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
  &#8226;   <a href="#py_compile">py_compile</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
@@ -7183,7 +7287,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Backend.Tools.Init">Backend.Tools.Init</a>
  &#8226;   <a href="#email.generator">email.generator</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#statistics">statistics</a>
@@ -7597,7 +7702,8 @@ imported by:
   <a name="sys"></a>
   <tt>sys</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#Main.py">Main.py</a>
+    <a href="#Backend.Surfaces.MainSurface">Backend.Surfaces.MainSurface</a>
+ &#8226;   <a href="#Main.py">Main.py</a>
  &#8226;   <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_compression">_compression</a>

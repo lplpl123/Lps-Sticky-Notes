@@ -3,7 +3,7 @@ import ctypes
 from Backend.CustomeWidget import *
 from Backend.Tools.ProcessText import ReadText
 from Backend.Surfaces.MainSurface import MainSurface
-from Backend.Tools.Init import InitLocalFiles, InitColors
+from Backend.Tools.Init import InitColors
 
 
 
@@ -12,7 +12,6 @@ if __name__ == '__main__':
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     isSaved = True
-    InitLocalFiles()
     colorFront, colorBack = InitColors()
     savedTexts = ReadText()
 

@@ -1,16 +1,25 @@
 待做
   周边有一圈可以拉动的 check
-  记忆上一次打开的格式信息
+  记忆上一次打开的格式信息 check
+  主题保存 check
+  当前的主题选中效果
+  保存前色和底色的切换效果
+  保存加粗效果
+
   建立模板
   自定义模板
   作check框
   整理theme
   读取和导出功能
+  对于color读取的结果要做一个assert的验证
 
   更新加大缩小字号，不要是这么大的字号了 check
-  保存样式信息 doing
+  保存样式信息 check
 
   菜单整理
+  可以自定义创建和保存模板
+  对于不同的工作场景切换不同的模板
+  能不能分页记录
 
 使用html语言来写
 开发不同的便利贴模式
@@ -26,12 +35,20 @@
 
 
 整理：
-1. 提取方法main
-2. 制作mainsurface
-3. 界面控件和函数分开
-4.
+1. 提取方法main check
+2. 制作mainsurface check
+3. save提取成tools中的一个函数工具
+4. 整理这些函数的顺序，页面函数，尽量提取到只涉及前端的操作
+5. 设置对应的模板样式
+6. 加入新的主题颜色（至少要上百种）
 
 
 
 打包命令
-pyinstaller -F -w -i "./Resources/icon.jpg" main.py --distpath "C:\Projects\GithubProjects\Lps-Sticky-Notes\Packing"
+pyinstaller -F -w -i "./Resources/icon.jpg" main.py --distpath "C:\Projects\PackingProjects"
+
+
+运营待做：
+把所有不同颜色的截图放在一排
+微软商店上架
+使用自己的模板写出很多不同的应用场景来作为一排
