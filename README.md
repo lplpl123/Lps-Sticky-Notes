@@ -19,8 +19,9 @@ It contains luxurious color themes.
 ## Update
 2025.12.9
 
-Now can save the color and font size.
-Now can see the current theme.
+* Now can save the color and font size.
+* Now can see the current theme.
+* Fix the drag bug.
 
 ## Contact
 ![image](./notes/Readme/code.jpg)
