@@ -282,6 +282,7 @@ class MainSurface:
 
     def SetTheme(self, themeText):
         showIndex = random.randint(0, 1)
+        self.textEdit.setPlaceholderText(themeText)
 
         self.colorFront = self.colors[themeText][showIndex]
         self.colorBack = self.colors[themeText][1 - showIndex]
